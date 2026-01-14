@@ -1,6 +1,7 @@
 # src/utils/student_row_mapper.py
 from __future__ import annotations
 
+from datetime import date
 from typing import Any, Dict
 
 from src.schemas.student import StudentCreate
@@ -11,6 +12,8 @@ def row_to_student(row: Dict[str, Any]) -> StudentCreate:
     mapped = dict(row)
 
     mapped["anio_inicio"] = to_int(mapped.get("anio_inicio"))
+    #cy = date.today().year
+    #print("DEBUG current_year:", cy, "anio_inicio_raw:", mapped.get("anio_inicio"))
     mapped["anio_fin"] = to_int(mapped.get("anio_fin"))
     mapped["NUE"] = to_int(mapped.get("NUE"))
 

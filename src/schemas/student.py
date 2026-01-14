@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime,date
 from typing import Optional, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -29,20 +29,13 @@ class StudentBase(BaseModel):
 
     @field_validator("anio_inicio", mode="before")
     @classmethod
-    def validate_anio_inicio(cls, v):
-        if v is None:
-            raise ValueError("anio_inicio es requerido")
-
-        try:
-            v = int(str(v).strip())
-        except Exception:
-            raise ValueError("anio_inicio debe ser numérico")
-
-        current_year = datetime.utcnow().year
+    def validate_anio_inicio(cls, v: int):
+        print("DEBUG VALIDATOR RUNS, anio_inicio =", v)
+        v = int(v)
+        current_year = date.today().year
+        print("DEBUG VALIDATOR RUNS, current_year =", current_year)
         if v > current_year:
-            raise ValueError(
-                f"anio_inicio no puede ser mayor al año actual ({current_year})"
-            )
+            raise ValueError(f"anio_inicio no puede ser mayor al año actual ({current_year})")
         return v
 
 
