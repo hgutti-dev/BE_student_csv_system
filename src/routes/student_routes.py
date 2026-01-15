@@ -22,9 +22,3 @@ async def list_students(
     return await repo.list(limit=limit, skip=skip)
 
 
-@router.get("/{student_id}", response_model=StudentRead)
-async def get_student(student_id: str, repo: StudentRepository = Depends(get_repo)):
-    student = await repo.get_by_id(student_id)
-    if not student:
-        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
-    return student

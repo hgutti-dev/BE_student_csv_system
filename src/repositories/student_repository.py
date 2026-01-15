@@ -31,11 +31,6 @@ class StudentRepository:
             estado=doc["estado"],
         )
 
-    async def get_by_id(self, student_id: str) -> Optional[StudentRead]:
-        if not ObjectId.is_valid(student_id):
-            return None
-        doc = await self._collection.find_one({"_id": ObjectId(student_id)})
-        return self._doc_to_read(doc) if doc else None
 
     async def list(self, limit: int = 50, skip: int = 0) -> List[StudentRead]:
         cursor = self._collection.find({}).skip(skip).limit(limit).sort("nombre_estudiante", 1)
