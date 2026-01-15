@@ -11,12 +11,7 @@ def validate_no_duplicates_in_file(
     students: List[StudentCreate],
     start_row: int = 1,
 ) -> Tuple[List[StudentCreate], List[RowError]]:
-    """
-    Valida duplicados dentro del archivo:
-    - NUE duplicado
-    - nombre_estudiante duplicado (case-insensitive, trimmed)
-    Retorna (valid_students, errors)
-    """
+    
     seen_nue: Set[int] = set()
     seen_nombre: Set[str] = set()
 

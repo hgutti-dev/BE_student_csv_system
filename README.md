@@ -59,6 +59,8 @@ La arquitectura sigue **buenas prácticas**, aplicando **Service Layer + Reposit
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
+uvicorn src.main:app --reload
+
 
 ### 1) Clonar el repositorio
 

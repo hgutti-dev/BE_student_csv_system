@@ -12,10 +12,7 @@ def bulk_write_error_to_row_errors(
     bwe: BulkWriteError,
     chunk_start_index: int,
 ) -> List[RowError]:
-    """
-    Convierte errores de Mongo bulkWrite en RowError “humanos”.
-    chunk_start_index: índice global (0-based) del inicio del chunk en la lista valid_students.
-    """
+   
     errors: List[RowError] = []
     write_errors = (bwe.details or {}).get("writeErrors", [])
 
@@ -24,7 +21,7 @@ def bulk_write_error_to_row_errors(
         code = we.get("code")
         errmsg = we.get("errmsg", "Bulk write error")
 
-        # fila global aproximada (1-based)
+       
         row_global = chunk_start_index + op_index + 1
 
         errors.append(

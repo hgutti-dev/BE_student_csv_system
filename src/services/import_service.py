@@ -32,7 +32,6 @@ class ImportService:
         total = len(rows)
         errors: List[RowError] = []
 
-        # 1) Mapear filas -> Students (capturando errores por fila)
         students: List[StudentCreate] = []
         for idx, r in enumerate(rows, start=1):
             try:
@@ -40,14 +39,13 @@ class ImportService:
             except Exception as e:
                 errors.append(RowError(row=idx, field="*", value=r, message=str(e)))
 
-        # 2) Duplicados dentro del archivo
+       
         valid_students, dup_errors = validate_no_duplicates_in_file(students, start_row=1)
         errors.extend(dup_errors)
 
         inserted = 0
         updated = 0
 
-        # 3) Persistencia por chunks
         for start_index, chunk in chunked(valid_students, batch_size):
             try:
                 ins, upd = await self._repo.bulk_upsert_by_NUE(chunk)

@@ -13,7 +13,7 @@ class StudentRepository:
         self._collection: AsyncIOMotorCollection = db["students"]
 
     async def ensure_indexes(self) -> None:
-        # Unicidad real en BD
+       
         await self._collection.create_index("nombre_estudiante", unique=True)
         await self._collection.create_index("NUE", unique=True)
 
@@ -41,10 +41,7 @@ class StudentRepository:
         self,
         students: List[StudentCreate],
     ) -> Tuple[int, int]:
-        """
-        Upsert por NUE: si existe, actualiza; si no, inserta.
-        Retorna (inserted, updated).
-        """
+      
         if not students:
             return (0, 0)
 
@@ -59,7 +56,6 @@ class StudentRepository:
                 )
             )
 
-        # ordered=False => continúa aunque una operación falle (mejor para batch grandes)
         res = await self._collection.bulk_write(ops, ordered=False)
         inserted = res.upserted_count
         updated = res.modified_count
